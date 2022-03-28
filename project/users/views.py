@@ -3,6 +3,10 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+
+from .forms import EmployeeForm
+from django.shortcuts import (get_object_or_404, render, HttpResponseRedirect)
+from django.shortcuts import render
 from .models import User, Employee
 
 from rest_framework import generics
@@ -59,3 +63,51 @@ class EmployeeUpdateApi(generics.RetrieveUpdateAPIView):
 class EmployeeDeleteApi(generics.DestroyAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+
+# Crud
+def create_employee(request):
+    context = {}
+
+    form = EmployeeForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+    context['form'] = form
+    return render(request, "create_employee.html", context)
+
+
+def employee_list(request):
+    data = {"dataset": Employee.objects.all()}
+    return render(request, "list_employee.html", data)
+
+
+def employee_details(request, employee_id):
+    context = {"data": Employee.objects.get(id=employee_id)}
+    return render(request, "details_employee.html", context)
+
+
+def update_employee(request, employee_id):
+    context = {}
+
+    obj = get_object_or_404(Employee, id=employee_id)
+    form = EmployeeForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('employee/' + employee_id + '/details/', employee_details)
+
+    context["form"] = form
+
+    return render(request, "update_employee.html", context)
+
+
+def delete_employee(request, employee_id):
+    context = {}
+
+    obj = get_object_or_404(Employee, id=employee_id)
+
+    if request.method == "POST":
+        obj.delete()
+        return HttpResponseRedirect("employee/list/")
+
+    return render(request, "delete_employee.html", context)
