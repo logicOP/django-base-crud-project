@@ -66,57 +66,7 @@ class EmployeeDeleteApi(generics.DestroyAPIView):
     serializer_class = EmployeeSerializer
 
 
-# Crud
-
-# class EmployeeCrud(APIView):
-#     authentication_classes = []
-#     permission_classes = []
-#
-#     def create_employee(self, request):
-#         context = {}
-#
-#         form = EmployeeForm(request.POST or None)
-#         if form.is_valid():
-#             form.save()
-#
-#         context['form'] = form
-#         return render(request, "create_employee.html", context)
-#
-#     def employee_list(self, request):
-#         data = {"dataset": Employee.objects.all()}
-#         return render(request, "list_employee.html", data)
-#
-#     def employee_details(self, request, employee_id):
-#         context = {"data": Employee.objects.get(id=employee_id)}
-#         return render(request, "details_employee.html", context)
-#
-#     def update_employee(self, request, employee_id):
-#         context = {}
-#
-#         obj = get_object_or_404(Employee, id=employee_id)
-#         form = EmployeeForm(request.POST or None, instance=obj)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('employee/' + employee_id + '/details/', self.employee_details)
-#
-#         context["form"] = form
-#
-#         return render(request, "update_employee.html", context)
-#
-#     def delete_employee(self, request, employee_id):
-#         context = {}
-#
-#         obj = get_object_or_404(Employee, id=employee_id)
-#
-#         if request.method == "POST":
-#             obj.delete()
-#             return HttpResponseRedirect("employee/list/")
-#
-#         return render(request, "delete_employee.html", context)
-
 def create_employee(request):
-    context = {}
-
     form = EmployeeForm(request.POST or None)
     if form.is_valid():
         form.save()
