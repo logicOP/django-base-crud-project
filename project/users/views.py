@@ -3,7 +3,11 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import User
+from .models import User, Employee
+
+from rest_framework import generics
+from rest_framework.response import Response
+from users.serializers import EmployeeSerializer
 
 
 class UserBaseView(View):
@@ -34,3 +38,24 @@ class UserUpdateView(UserBaseView, UpdateView):
 
 class UserDeleteView(UserBaseView, DeleteView):
     """View to delete a User"""
+
+
+# Crud using REST Framework
+class EmployeeCreateApi(generics.CreateAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
+class EmployeeApi(generics.ListAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
+class EmployeeUpdateApi(generics.RetrieveUpdateAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
+class EmployeeDeleteApi(generics.DestroyAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer

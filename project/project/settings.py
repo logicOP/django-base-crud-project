@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Custom Apps
 
     'django_extensions',
+    'rest_framework',
     'users.apps.UsersConfig'
 ]
 
