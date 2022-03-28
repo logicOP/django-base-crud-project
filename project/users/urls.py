@@ -19,9 +19,9 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('employee/list/', employee_list()),
-    path('employee/create/', create_employee()),
-    path('employee/<int:pk>/details/', employee_details),
-    path('employee/<int:pk>/update/', update_employee()),
-    path('employee/<int:pk>/delete/', update_employee())
+    path('employee/list/', employee_list),
+    path('employee/create/', create_employee),
+    path('employee/<int:employee_id>/details/', employee_details),
+    path('employee/<int:employee_id>/update/', update_employee),
+    path('employee/<int:employee_id>/delete/', delete_employee)
 ]

@@ -10,6 +10,5 @@ class EmployeeForm(forms.ModelForm):
             "employee_reg_no",
             "employee_name",
             "employee_email",
-            "employee_mobile",
-            "created_at"
+            "employee_mobile"
         ]
